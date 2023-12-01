@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cerdito a Dieta</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- WELCOME -->
+    <div id="welcome" data-visible="true">
+        <div id="welcome-container">
+            <h1 id="welcome-title">Cerdito a dieta</h1>
+            <p id="welcome-desc">Consume vegetales y evita la comida chatarra, estás a dieta. Si te topas con obstáculos sáltalos o perderás. Ocupa "Espacio" para saltar.</p>
+            <div>
+                <label for="welcome-player">Tu alias de jugador:</label>
+                <input type="text" id="welcome-player" maxlength="30" placeholder="Ej. Waton">
+                <label for="welcome-character">Elije un personaje:</label>
+                <select id="welcome-character"></select>
+                <label for="welcome-background">Elije un Fondo:</label>
+                <select id="welcome-background"></select>
+                <label for="welcome-floor">Elije un Suelo:</label>
+                <select id="welcome-floor"></select>
+            </div>
+            <button id="welcome-play">¡Jugar!</button>
+        </div>
+    </div>
+    <!-- WELCOME -->
+
+    <!-- GAME CONTAINER -->
+    <div id="game-container" data-animated="false">
+        <div id="player-info" data-visible="false"></div>
+        <div id="character" data-visible="false"></div>
+        <div id="block-container" data-visible="true"></div>
+        <div id="floor"></div>
+    </div>
+    <!-- GAME CONTAINER -->
+
+    <!-- ESTADISTICAS -->
+    <div id="statistics" data-visible="false">
+        <div id="statistics-container">
+            <h1 id="statistics-title">Estadísticas</h1>
+            <div>
+                <p id="statistics-player"></p>
+                <p id="statistics-points"></p>
+            </div>
+            <button id="statistics-play">¡Volver a Jugar!</button>
+        </div>
+    </div>
+    <!-- ESTADISTICAS -->
+    
+    <script src="functions.js"></script>
+</body>
+</html>

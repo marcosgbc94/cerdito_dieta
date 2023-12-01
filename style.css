@@ -1,0 +1,473 @@
+/* ESTILOS */
+
+/*** CONFIGURACIONES ***/
+
+:root {
+    --game-container-h: 500px; /* LARGO DEL CONTENEDOR DEL JUEGO */
+    --game-container-w: 1000px; /* ANCHO DEL CONTENEDOR DEL JUEGO */
+    --character-h: 100px; /* LARGO DEL PERSONAJE */
+    --character-w: 110px; /* ANCHO DEL PERSONAJE */
+    --character-jump: calc(var(--block-h) + 100px); /* ALTO DEL SALTO DEL PERSONAJE */
+    --character-jump-time: 0.5s; /* TIEMPO DEL SALTO DEL PERSONAJE */
+    --block-h: 50px; /* ALTO DE LOS BLOQUES */
+    --block-w: 50px; /* ANCHO DE LOS BLOQUES */
+    --block-move-time: 1.5s; /* TIEMPO DE MOVIMIENTO DE LOS BLOQUES */
+    --floor-h: 50px; /* ALTO DEL SUELO */
+    --floor-image-size: 100px; /* TAMAÑO DE LAS IMAGENES DEL SUELO */
+    --floor-elements: 35px; /* POSICION DE LOS ELEMENTOS EN EL SUELO */
+}
+
+/*** GENERALES ***/
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    align-items: center;
+    background-color: black;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    position: fixed;
+    width: 100%;
+}
+
+/*** ANIMACIONES ***/
+
+@keyframes slide-in-right {
+    0% {
+        left: 100%;
+    }
+    100% {
+        left: 0;
+    }
+}
+
+@keyframes jump {
+    0% {
+        bottom: var(--floor-elements);
+    }
+    50% {
+        bottom: var(--character-jump);
+    }
+    100% {
+        bottom: var(--floor-elements);
+    }
+}
+
+@keyframes animated-background {
+    from {
+      background-position: 0 0;
+    }
+    to {
+      background-position: -10000px 0;
+    }
+}
+
+/*** GAME CONTAINER (FONDO) ***/
+
+#game-container {
+    background-color: white;
+    background-position: center;
+    background-repeat: repeat-x;
+    background-size: contain;
+    border-radius: 15px;
+    height: var(--game-container-h);
+    overflow-x: hidden;
+    position: fixed;
+    width: var(--game-container-w);
+}
+
+#game-container[data-theme="clouds"] {
+    background-image: url(./images/backgrounds/clouds.jpg);
+}
+
+#game-container[data-theme="universe"] {
+    background-image: url(./images/backgrounds/universe.jpg);
+}
+
+#game-container[data-animated="true"] {
+    animation: animated-background 200s linear infinite;
+}
+
+#game-container[data-animated="false"] {
+    animation: none;
+}
+
+/*** CHARACTER (PERSONAJE) ***/
+
+#character {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: transparent;
+    bottom: var(--floor-elements);
+    height: var(--character-h);
+    left: 200px;
+    position: absolute;
+    width: var(--character-w);
+    z-index: 5;
+}
+
+#character[data-visible="true"] {
+    display: block;
+}
+
+#character[data-visible="false"] {
+    display: none;
+}
+
+#character.jump {
+    animation: jump var(--character-jump-time) linear;
+}
+
+#character[data-theme="pig"] {
+    background-image: url(./images/character/pig.gif);
+}
+
+#character[data-theme="elephant"] {
+    background-image: url(./images/character/elephant.gif);
+}
+
+/*** BLOCK CONTAINER (CONTENEDOR DE BLOQUES) ***/
+
+#block-container {
+    bottom: var(--floor-elements);
+    height: var(--block-h);
+    left: 0;
+    position: absolute;
+    width: var(--game-container-w);
+    z-index: 1;
+}
+
+#block-container[data-visible="true"] {
+    display: block;
+}
+
+#block-container[data-visible="false"] {
+    display: none;
+}
+
+/*** BLOCK (ITEM ENEMIGO O CONSUMIBLE) ***/
+
+.block {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: transparent;
+    height: var(--block-h);
+    left: 0;
+    position: absolute;
+    width: var(--block-w);
+    z-index: 1;
+}
+
+.block[data-animated="true"] {
+    animation: slide-in-right var(--block-move-time) linear;
+}
+
+.block[data-animated="false"] {
+    animation: none;
+}
+
+.block[data-visible="true"] {
+    display: block;
+}
+
+.block[data-visible="false"] {
+    display: none;
+}
+
+.block[data-theme="cabbage"] {
+    background-image: url(./images/blocks/cabbage.svg);
+}
+
+.block[data-theme="broccoli"] {
+    background-image: url(./images/blocks/broccoli.svg);
+}
+
+.block[data-theme="pumpkin"] {
+    background-image: url(./images/blocks/pumpkin.svg);
+}
+
+.block[data-theme="tomato"] {
+    background-image: url(./images/blocks/tomato.svg);
+}
+
+.block[data-theme="pizza"] {
+    background-image: url(./images/blocks/pizza.svg);
+}
+
+.block[data-theme="donuts"] {
+    background-image: url(./images/blocks/donuts.svg);
+}
+
+.block[data-theme="urchin"] {
+    background-image: url(./images/blocks/urchin.svg);
+}
+
+.block[data-theme="cactus"] {
+    background-image: url(./images/blocks/cactus.svg);
+}
+
+/*** FLOOR (SUELO) ***/
+
+#floor {
+    background-position: center;
+    background-repeat: repeat-x;
+    background-size: var(--floor-image-size);
+    background-color: green;
+    bottom: 0;
+    filter: drop-shadow(2px 5px 15px black);
+    height: var(--floor-h);
+    position: absolute;
+    width: 100%;
+}
+
+#floor[data-animated="true"] {
+    animation: animated-background 20s linear infinite;
+}
+
+#floor[data-animated="false"] {
+    animation: none;
+}
+
+#floor[data-theme="stone"] {
+    background-image: url(./images/floors/stone.avif);
+}
+
+#floor[data-theme="metal"] {
+    background-image: url(./images/floors/metal.jpg);
+    background-size: cover;
+}
+
+/*** PLAYER INFO (INFORMACION DEL JUGADOR) ***/
+
+#player-info {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.25);
+    height: auto;
+    left: 20px;
+    padding: 5px 20px;
+    position: absolute;
+    top: 20px;
+    width: auto;
+}
+
+#player-info[data-visible="true"] {
+    display: block;
+}
+
+#player-info[data-visible="false"] {
+    display: none;
+}
+
+/*** WELCOME ***/
+
+#welcome {
+    align-items: center;
+    background-image: url(./images/backgrounds/clouds.jpg);
+    background-color: white;
+    background-position: center;
+    background-repeat: repeat-x;
+    background-size: contain;
+    height: var(--game-container-h);
+    justify-content: center;
+    overflow-x: hidden;
+    position: fixed;
+    width: var(--game-container-w);
+    z-index: 3;
+}
+
+#welcome[data-visible="true"] {
+    display: flex;
+}
+
+#welcome[data-visible="false"] {
+    display: none;
+}
+
+#welcome-container {
+    background-color: brown;
+    background-image: url(./images/wood.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 15px;
+    box-shadow: 2px 2px 15px 0px rgba(0,0,0,0.25);
+    height: auto;
+    max-width: 600px;
+    padding: 30px 20px;
+    position: absolute;
+    text-align: center;
+    width: auto;
+}
+
+#welcome-title {
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.8);
+    color: white;
+    letter-spacing: 2px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+#welcome-desc {
+    color: white;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.8);
+}
+
+#welcome-container > div {
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.26) inset;
+    background-color: white;
+    padding: 10px;
+    text-align: left;
+}
+
+#welcome-container > div label {
+    color: darkslategray;
+    padding-left: 5px;
+}
+
+#welcome-player {
+    border: 1px solid rgb(118, 118, 118);
+    border-radius: 10px;
+    background-color: transparent;
+    margin-bottom: 5px;
+    padding: 10px;
+    width: 100%;
+}
+
+#welcome-play {
+    border: 0;
+    border-radius: 10px;
+    background-color: #C05746;
+    color: white;
+    cursor: pointer;
+    font-size: 1.5rem;
+    height: auto;
+    margin-top: 15px;
+    padding: 8px 50px;
+    transition: all .25s;
+    width: auto;
+}
+
+#welcome-play:hover {
+    background-color: #A74839;
+}
+
+#welcome-play:active {
+    background-color: #984134;
+}
+
+#welcome-character {
+    border-radius: 10px;
+    margin-bottom: 5px;
+    padding: 9px;
+    width: 100%;
+}
+
+#welcome-background {
+    border-radius: 10px;
+    margin-bottom: 5px;
+    padding: 9px;
+    width: 100%;
+}
+
+#welcome-floor {
+    border-radius: 10px;
+    padding: 9px;
+    width: 100%;
+}
+
+/*** STATISTICS ***/
+
+#statistics {
+    align-items: center;
+    background-image: url(./images/backgrounds/clouds.jpg);
+    background-color: white;
+    background-position: center;
+    background-repeat: repeat-x;
+    background-size: contain;
+    height: var(--game-container-h);
+    justify-content: center;
+    overflow-x: hidden;
+    position: fixed;
+    width: var(--game-container-w);
+    z-index: 3;
+}
+
+#statistics[data-visible="true"] {
+    display: flex;
+}
+
+#statistics[data-visible="false"] {
+    display: none;
+}
+
+#statistics-container {
+    background-color: brown;
+    background-image: url(./images/wood.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 15px;
+    box-shadow: 2px 2px 15px 0px rgba(0,0,0,0.25);
+    height: auto;
+    max-width: 600px;
+    padding: 30px 20px;
+    position: absolute;
+    text-align: center;
+    width: auto;
+}
+
+#statistics-title {
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.8);
+    color: white;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+#statistics-container > div {
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.26) inset;
+    background-color: white;
+    padding: 10px;
+    text-align: left;
+}
+
+#statistics-player > b {
+    padding-right: 5px;
+}
+
+#statistics-points > b {
+    padding-right: 5px;
+}
+
+#statistics-play {
+    border: 0;
+    border-radius: 10px;
+    background-color: #C05746;
+    color: white;
+    cursor: pointer;
+    font-size: 1.5rem;
+    height: auto;
+    margin-top: 15px;
+    padding: 8px 50px;
+    transition: all .25s;
+    width: auto;
+}
+
+#statistics-play:hover {
+    background-color: #A74839;
+}
+
+#statistics-play:active {
+    background-color: #984134;
+}
